@@ -35,6 +35,7 @@ public class FeedreaderApplication implements CommandLineRunner {
         List<Add>  storage = new ArrayList<>();
         boolean allFetched = false;
         PageParser parser = new PageParser();
+        System.out.println("Starting data harvest");
         while (!allFetched){
             int page = 0;
             boolean last = false;
@@ -49,13 +50,14 @@ public class FeedreaderApplication implements CommandLineRunner {
             allFetched=parser.lastPublisghedDateParsed.before(sixMonthAgo);
             endDate = parser.lastPublisghedDateParsed;
         }
-        System.out.println("Harest data complete");
+        System.out.println("Data harvest complete");
         List<Add> result = new ArrayList<>();
         repository.getall().forEach((uuid, add) -> result.add(add));
-        long kotlinAdds = result.stream().filter(add -> add.getDesctipion().contains("Kotlin")).count();
-        long javaAdds = result.stream().filter(add -> add.getDesctipion().contains("Java")).count();
-        System.out.println("Kotin :" +kotlinAdds);
-        System.out.println("java :" +javaAdds);
+
+
+        System.out.println("Kotin :" +repository.findByDescription("kotlin").size());
+        System.out.println("java :" +repository.findByDescription("java").size());
+
         System.out.println("Program completed. Shutting down");
         System.exit(0);
     }
