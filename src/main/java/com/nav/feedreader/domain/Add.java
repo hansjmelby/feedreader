@@ -42,7 +42,7 @@ public class Add {
         return source;
     }
 
-    public int weekNumber () {
+    public int  weekNumber () {
         Calendar cal = Calendar.getInstance();
         cal.setTime(published);
         return cal.get(weekNumber());
