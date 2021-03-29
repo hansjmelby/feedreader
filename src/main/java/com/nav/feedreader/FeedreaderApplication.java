@@ -51,10 +51,21 @@ public class FeedreaderApplication implements CommandLineRunner {
             endDate = parser.lastPublisghedDateParsed;
         }
         System.out.println("Data harvest complete");
-        List<Add> result = new ArrayList<>();
-        repository.getall().forEach((uuid, add) -> result.add(add));
 
+        Map<Integer,List<Add>> javaresult = repository.findByDescription("kotlin")
+                .stream()
+                .collect(Collectors.groupingBy(Add::weekNumber)
+                );
+        Map<Integer,List<Add>> kotlinResult = repository.findByDescription("java")
+                .stream()
+                .collect(Collectors.groupingBy(Add::weekNumber)
+                );
 
+        System.out.println("-------------------ANTAL ANONSER PR UKE FOR JAVA -------------");
+        javaresult.forEach((integer, adds) -> System.out.println("Uke :"+integer+", "+adds.size()));
+        System.out.println("-------------------ANTAL ANONSER PR UKE FOR KOTLIN -------------");
+        kotlinResult.forEach((integer, adds) -> System.out.println("Uke :"+integer+", "+adds.size()));
+        System.out.println("-------------------TOTAL ANTALL ANSONSER  -------------");
         System.out.println("Kotin :" +repository.findByDescription("kotlin").size());
         System.out.println("java :" +repository.findByDescription("java").size());
 

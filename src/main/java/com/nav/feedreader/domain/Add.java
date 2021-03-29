@@ -22,6 +22,7 @@ public class Add {
     private String desctipion;
     private Date expires;
     private String source;
+    private Calendar pubDate;
 
     public UUID getUuid() {
         return uuid;
@@ -45,6 +46,6 @@ public class Add {
     public int  weekNumber () {
         Calendar cal = Calendar.getInstance();
         cal.setTime(published);
-        return cal.get(weekNumber());
+        return cal.get(Calendar.WEEK_OF_YEAR);
     }
 }
